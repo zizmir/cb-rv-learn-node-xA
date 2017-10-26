@@ -4,6 +4,7 @@
   "description": "exam",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "color": "^2.0.0",
     "colors": "^1.1.2",
     "lodash": "^4.17.4",
