@@ -44,14 +44,25 @@ const server = http.createServer((req, res) => {
   else if (req.method == "POST" && req.url == "/add-session") {
     let body = '';
     req.on('data', (data)=>{
+
+      // create cookie with sessionID
+      let sessionID= uuidv4();
+      res.setHeader("Set-Cookie", "sessionID="+sessionID);
+
+
       body += data;
-       let sessionID= uuidv4();
-       res.setHeader("Set-Cookie", "sessionID="+sessionID);
       console.log(body);
       res.write(body);
-      // To Write a Cookie
      
-     
+      let filename = `.sessions/${sessionID}.txt`;
+
+      fs.writeFile(filename, body, function(err) {
+      if(err) {
+              return console.log(err);
+          }
+
+          console.log("The file was saved!");
+      });
       res.end();
     });
 
