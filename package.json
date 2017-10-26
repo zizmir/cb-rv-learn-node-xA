@@ -1,0 +1,27 @@
+{
+  "name": "mbark",
+  "version": "1.0.0",
+  "description": "exam",
+  "main": "server.js",
+  "dependencies": {
+    "color": "^2.0.0",
+    "colors": "^1.1.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zizmir/cb-rv-learn-node-xA.git"
+  },
+  "author": "mbark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zizmir/cb-rv-learn-node-xA/issues"
+  },
+  "homepage": "https://github.com/zizmir/cb-rv-learn-node-xA#readme"
+}
