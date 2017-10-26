@@ -10,9 +10,11 @@ const uuidv4  = require('uuid/v4');
 const port = process.argv[2] || 8080;
 
 const server = http.createServer((req, res) => {
-  
 
-
+  // setTimeout(function (res) {
+  //   res.setHeader("Set-Cookie", "");
+  //   console.log('boo')
+  // }, 100);
   req.url = req.url == '/' ? 'index.html' : req.url;
 
   try {
@@ -27,16 +29,40 @@ const server = http.createServer((req, res) => {
 
   if(req.method == "GET")
   {
+     if(req.headers.cookie)
+     {
 
-    fs.createReadStream(path.join(__dirname, req.url), {flags: 'r'})
-    .on('error', (err) => {
-      let content = fs.readFileSync(path.join(__dirname, '404.html'));
-      mlog.error(req.url);
-      res.statusCode = 404;
+    let users = req.headers.cookie.split(';');
 
-      res.end(content);
-    })
-    .pipe(res);
+    let sessionUser = '';
+
+    users.forEach((item) => {
+      let c     = item.split('=');
+          // console.log(c[1])
+
+      sessionUser = c[1];
+    });
+
+      // // setting the file to render
+      let fileName = `.sessions/${sessionUser}.txt`;
+      
+      let contentSession=fs.readFileSync(fileName,  "utf8");
+
+      res.setHeader("x-my-user-data", contentSession);
+      
+     }
+
+      fs.createReadStream(path.join(__dirname, req.url), {flags: 'r'})
+      .on('error', (err) => {
+        let content = fs.readFileSync(path.join(__dirname, '404.html'));
+        mlog.error(req.url);
+        res.statusCode = 404;
+
+        res.end(content);
+      })
+      .pipe(res);
+
+
 
     mlog.info("GET", req.url);
   }
@@ -60,13 +86,12 @@ const server = http.createServer((req, res) => {
       if(err) {
               return console.log(err);
           }
-
-          console.log("The file was saved!");
       });
       res.end();
     });
 
   }
+
 
 });
 
